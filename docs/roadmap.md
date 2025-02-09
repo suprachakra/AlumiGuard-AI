@@ -37,3 +37,11 @@
 ### Adaptations & Feedback Loops
 - End-of-iteration demos, cross-functional reviews (Product, QA, Ops).
 - Data-driven pivot if new defect types or major compliance changes arise.
+
+### Agile Data Workstreams
+
+- **Backlog Management**: Stories related to data governance, cataloging, and advanced analytics are captured as separate epics.
+- **Scrum Master Collaboration**: The Scrum Master ensures data tasks are prioritized alongside traditional dev tasks, aligning with business objectives.
+- **Cross-Functional Sync**: Weekly standups involve data scientists, data engineers, solution architects, and product owners to ensure alignment.
+
+
