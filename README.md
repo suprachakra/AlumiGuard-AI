@@ -1,11 +1,12 @@
 # AlumiGuard-AI
-Defending Quality in Aluminum Manufacturing with Machine Precision and AI-Powered Perfection
+Defending Quality in Aluminum Manufacturing with Machine Precision and AI-Powered Perfection. it automates detection of aluminum surface defects (cracks, corrosion, pitting, dents). It leverages YOLOv8, containerized microservices, and can run on NVIDIA Jetson or in the cloud.
 
 # Aluminum Defect Detection System
 
 ## Overview
 
-This project uses YOLOv8 to detect surface defects in aluminum manufacturing.
+This project uses YOLOv8 to detect surface defects and forging a new era of automated quality in aluminum manufacturing
+
 
 ## Features:
 1. **Real-time defect detection API** with 94.7% mAP.
@@ -28,3 +29,4 @@ This project uses YOLOv8 to detect surface defects in aluminum manufacturing.
 - **$120M/3yr Projected ROI**
 
 ![Demo](docs/demo.gif)
+
