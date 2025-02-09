@@ -22,3 +22,9 @@ AeroCheck AI is split into three layers:
 - **Logging**: Centralized in Azure Monitor
 - **Metrics**: GPU usage, inference latency
 - **Alerting**: High error rates or unusual drift triggers ops notifications
+
+## Monitoring & Alerting
+- Integrate Azure Monitor or Datadog + Grafana
+- Log ingestion: container logs => centralized platform
+- Alerts: CPU usage > 80%, inference latency spike, sudden defect rate changes
+
