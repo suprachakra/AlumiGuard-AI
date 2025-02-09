@@ -1,1 +1,12 @@
-
+__pycache__/
+*.pyc
+.env
+.venv
+.ipynb_checkpoints
+logs/
+*.log
+.coverage
+coverage_report/
+data_drift_report.html
+models/*.engine
+models/*.onnx
