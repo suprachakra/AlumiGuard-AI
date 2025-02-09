@@ -1,12 +1,20 @@
 #!/bin/bash
+# Azure Deployment Script (simplistic example)
 
+# Login to Azure
 az login
-az acr login --name <acr-name>
 
-docker tag aluminum-defect-detection:latest <acr-name>.azurecr.io/aluminum-defect-detection:latest
+# ACR Login
+ACR_NAME="<acr-name>"
+az acr login --name $ACR_NAME
 
-docker push <acr-name>.azurecr.io/aluminum-defect-detection:latest
+# Build & Push
+docker tag aerocheck-ai:latest $ACR_NAME.azurecr.io/aerocheck-ai:latest
+docker push $ACR_NAME.azurecr.io/alumiguard-ai:latest
 
-az aks get-credentials --resource-group <resource-group> --name <aks-cluster-name>
+# AKS Deployment
+RESOURCE_GROUP="<resource-group>"
+AKS_NAME="<aks-cluster-name>"
 
+az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_NAME
 kubectl apply -f kubernetes/deployment.yaml
