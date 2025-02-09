@@ -3,6 +3,7 @@
 
 ```markdown
 ### SAFe Agile Roadmap
+```
 
 ### Iteration 1 (Q1 2025): Core Platform & Pilot
 - **Objective**: Deploy AI model to pilot smelter line, gather feedback.
