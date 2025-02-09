@@ -24,3 +24,9 @@
 - **Data Translator**: Bridges business logic to technical teams, scoping out analytics use cases.
 - **Solution Architect**: Maintains the architecture blueprint, ensures compliance with IT/OT strategy, and monitors performance or cost.
 - **Agile Onboarding**: New data-focused roles learn about our sprint rituals, grooming sessions, and how to write or refine user stories specifically for data & AI tasks.
+
+## Advanced Analytics Onboarding
+
+- **Cross-Functional Projects**: Senior data scientists lead cross-functional efforts (predictive maintenance, optimization).
+- **Digital Academy**: We offer internal courses on advanced ML topics (TensorFlow, advanced statistical methods, HPC solutions).
+- **Model Lifecycle**: Each advanced model has scheduled performance checks, retraining windows, and business sign-off gates.
