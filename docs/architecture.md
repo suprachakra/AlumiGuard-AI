@@ -269,3 +269,196 @@ AlumiGuard AI is split into three layers:
 │ 4) Next training cycle includes corrected annotations or ICS environment notes │
 └────────────────────────────────────────────────────────────────────────────────┘
 ```
+```mermaid
+flowchart LR
+    %% --- CLASS DEFINITIONS (Colors) ---
+    classDef ICS fill:#fee7e7,stroke:#eb9d9d,color:#701414
+    classDef HPC fill:#f7f1e7,stroke:#d8b862,color:#5a4d1f
+    classDef DMZ fill:#fff8e7,stroke:#e8c96f,color:#5f4509
+    classDef Azure fill:#e7f0fe,stroke:#8daee9,color:#0f1d55
+    classDef MLOps fill:#f2eafa,stroke:#c7b5ea,color:#401e73
+    classDef Gov fill:#eafce7,stroke:#9fd79f,color:#22532f
+    classDef Reg fill:#e9fff7,stroke:#92c7bb,color:#0f4032
+    classDef Observ fill:#fefbd0,stroke:#dad169,color:#5a5c09
+    classDef Op fill:#f3ffe7,stroke:#bdde89,color:#3a4c1f
+    classDef FlowStroke stroke-width:2px,stroke:#333
+
+    %% --- ICS/OT ENVIRONMENT ---
+    subgraph ICS["ICS / OT Environment"]
+        A1["Nozomi or Vectra\n(ICS Security)"]:::ICS
+        A2["PLCs, SCADA,\nCameras, etc."]:::ICS
+        A1 --> A2
+    end
+
+    %% --- EDGE HPC ---
+    subgraph Edge["Edge HPC / Jetson\n(Local YOLO)"]
+        A3["Real-time YOLO Inference\n<10ms latency"]:::HPC
+        A4["Offline Buffer & Failover\n(if cloud link down)"]:::HPC
+        A3 --> A4
+    end
+
+    %% --- ICS DMZ ---
+    subgraph DMZ["ICS DMZ / Firewall\n(Minimal Ports, Logging)"]
+        A5["Strict Access Control\nWAF or Additional Firewalls"]:::DMZ
+    end
+
+    %% Connections among ICS, Edge, DMZ
+    A2 -- "Images + ICS data":::FlowStroke --> Edge
+    A1 -- "Security logs,\nthreat intel":::FlowStroke --> DMZ
+    Edge --> DMZ
+
+    %% --- AZURE SUBGRAPH ---
+    subgraph AzureEnv["Azure Environment"]
+        direction TB
+
+        subgraph NW["Secure Ingress\n(Azure Firewall / WAF)"]
+            A6["Validates JWT,\nRate Limits,\nTraffic Logging"]:::Azure
+        end
+
+        subgraph Landing["Azure Landing Zone\n(Blob / ADLS)"]
+            B1["Raw images,\nICS logs,\nEdge data"]:::Azure
+        end
+
+        subgraph AKS["AKS Cluster\n+ CNCF Tools"]
+            direction TB
+            subgraph CI_CD["CI/CD & GitOps"]
+                B2["Jenkins or Tekton\nBuildpacks, Helm"]:::Azure
+                B3["Argo or Flux\n(Declarative Deploy)"]:::Azure
+            end
+            subgraph Microservices["Microservices"]
+                B4["Data Validation\n& Preprocessing"]:::Azure
+                B5["Inference API\n(Batch fallback)"]:::Azure
+            end
+            subgraph Observability["Observability"]
+                B6["Azure Monitor,\nPrometheus\nfor metrics"]:::Observ
+                B7["Logs to Loki or\nAzure Log Analytics"]:::Observ
+            end
+            subgraph MLPipe["MLOps Pipeline"]
+                B8["train.py,\nDrift checks,\nJupyter/Kubeflow"]:::MLOps
+                B9["MLflow or custom\ntracking"]:::MLOps
+            end
+            subgraph SecurityExtras["Security & Policy"]
+                B10["OPA/Gatekeeper\n(optional)"]:::Azure
+                B11["Azure Key Vault\n(secrets)"]:::Azure
+            end
+        end
+
+        subgraph Governance["Data Governance\n(Purview / Collibra)"]
+            C1["Data Catalog,\nLineage,\nCompliance"]:::Gov
+        end
+
+        subgraph Analytics["Advanced Analytics\n(Synapse / Databricks)"]
+            C2["ETL, big data\nPredictive Maint,\nFeature Eng."]:::Gov
+        end
+
+        subgraph ModelRegistry["Model Registry\n(ACR / MLflow)"]
+            D1["Versioned Container\nImages,\nModel Artifacts"]:::Reg
+        end
+
+        %% AZURE Connections
+        A6 -- "Authorized traffic":::FlowStroke --> Landing
+        Landing -- "New data triggers":::FlowStroke --> AKS
+        AKS -- "Processed data,\nre-trained results":::FlowStroke --> Governance
+        Governance --> C1
+        C1 --> Analytics
+        Analytics -->|"Train or clean insights"| AKS
+        AKS -->|"Builds images":::FlowStroke| ModelRegistry
+        ModelRegistry -->|"Pull containers":::FlowStroke| Edge
+        ModelRegistry -->|"Cloud inference pods":::FlowStroke| AKS
+
+    end
+
+    %% Connection from DMZ to Azure Ingress
+    DMZ -- "TLS or VPN":::FlowStroke --> A6
+
+    %% FEEDBACK & OPERATOR UI
+    subgraph Feedback["Feedback & Operator UI\n(SAFe Cross-Functional)"]
+        E1["Operators, QA\nFlag missed defects,\nprovide new labels"]:::Op
+        E2["Nozomi/Vectra ICS\nThreat Dash /\nSOC Alerts"]:::Op
+    end
+
+    %% Final connections
+    E1 -->|"Annotations":::FlowStroke| AKS
+    E2 -->|"Correlate ICS events":::FlowStroke| A1
+
+    %% --- Overall Layout / Flow
+    class Edge,DMZ,ICS,A1,A2,A3,A4,A5,A6,B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,C1,C2,D1,E1,E2 FlowStroke
+```
+```mermaid
+graph TD
+
+    %% Edge & ICS Layer
+    subgraph Edge_and_ICS_Layer
+        A["Thermal Cameras & Sensors"] -->|"1080p\/4K Images"| B["NVIDIA Jetson AGX"]
+        B -->|"Local Inference"| C["Edge Buffer\/Queue"]
+        A -->|"PLC\/SCADA Data"| D["ICS Security Tools \(Nozomi\/Vectra\)"]
+        D -->|"Threat Detection"| E["OT SOC \(Security Operations Center\)"]
+        B -->|"Defect Metadata"| F["ICS DMZ"]
+        F -->|"Firewall\/WAF"| G["API Gateway"]
+    end
+
+    %% Azure Cloud Layer
+    subgraph Azure_Cloud_Layer
+        H["Azure Kubernetes Service (AKS)"] -->|"Inference API"| I["Flask API"]
+        H -->|"Data Preprocessing"| J["Data Validation"]
+        H -->|"MLOps Pipeline"| K["Tekton CI\/CD"]
+        L["Azure Machine Learning"] -->|"Model Training"| M["Hyperparameter Tuning"]
+        L -->|"Synthetic Data Generation"| N["GANs for Augmentation"]
+        O["Azure Blob Storage"] -->|"Raw Images & Logs"| P["Data Lake (ADLS)"]
+        Q["Azure Synapse Analytics"] -->|"Advanced Analytics & Reports"| R["Predictive Maintenance Insights"]
+    end
+
+    %% Data Governance & Security
+    subgraph Data_Governance_and_Security
+        S["Azure Purview"] -->|"Data Catalog & Lineage"| T["Business Glossary"]
+        U["Azure Key Vault"] -->|"Secrets Management"| V["Encryption Keys"]
+        W["Azure Active Directory"] -->|"RBAC & IAM Policies"| X["Audit Logs"]
+        Y["Compliance Tools"] -->|"ISO 27001 Checks"| Z["GDPR Compliance"]
+    end
+
+    %% CNCF Tools
+    subgraph CNCF_Tools
+        AA["Helm Charts"] -->|"Package & Deploy Services"| AB["Kubernetes Pods"]
+        AC["Buildpacks.io"] -->|"Containerize ML Apps"| AD["Docker Images"]
+        AE["Argo CD"] -->|"GitOps for Deployments"| AF["K8s Deployments"]
+        AG["Tekton Pipelines"] -->|"CI\/CD for MLOps Models"| AH["Pipeline Definitions"]
+        AI["Prometheus Metrics"] -->|"Monitoring Pods & Services"| AJ["Grafana Dashboards"]
+        AK["OPA\/Gatekeeper"] -->|"Policy Enforcement for K8s Deployments"| AL["Kubernetes Policies"]
+    end
+
+    %% Data Flows
+    A --> B
+    B --> C
+    C --> O
+    D --> O
+    E --> W
+    F --> G
+    G --> H
+    H --> Q
+    I --> Q
+    J --> Q
+    K --> L
+    L --> M
+    M --> H
+    N --> L
+    O --> Q
+    P --> Q
+    Q --> R
+
+    %% Governance Flows
+    S --> T
+    T --> U
+    U -.-> V   
+    V -.-> H
+    W -.-> X  
+    X -.-> Y 
+
+    %% CNCF Tool Interactions with Cloud Layer
+    AA -.-> H  
+    AC -.-> AD 
+    AE -.-> AF
+    AG -.-> AH
+    AI -.-> AJ
+    AK -.-> AL 
+
+```
