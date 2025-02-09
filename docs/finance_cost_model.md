@@ -13,3 +13,11 @@
 - **Storage**: $Y per GB/month in Azure Blob
 - **Edge Devices**: Jetson AGX ~$Xk each
 - **Support**: Tiers for enterprise clients
+
+## 3-Year TCO Estimation
+| Cost Component         | Year 1 | Year 2 | Year 3 | Notes                         |
+|------------------------|--------|--------|--------|--------------------------------
+| AKS compute            | $200k  | $210k  | $220k  | ~5% inflation
+| Jetson HW (10 units)   | $30k   | $5k    | $5k    | Renewal after 5 years
+| ...
+Total                   | ...    | ...    | ...    |
