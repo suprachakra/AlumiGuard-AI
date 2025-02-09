@@ -1,17 +1,24 @@
 # System Architecture
 
-## Overview:
-The system consists of three layers:
-1. **Edge Layer**: Real-time inference on NVIDIA Jetson AGX.
-2. **Cloud Layer**: Model training and monitoring on Azure Kubernetes Service.
-3. **Data Layer**: Centralized storage and analytics on Azure Synapse.
+## Overview
+AeroCheck AI is split into three layers:
 
-![System Architecture](diagrams/system_architecture.png)
+1. **Edge Layer**: Real-time inference on NVIDIA Jetson AGX
+2. **Cloud Layer**: Model training & orchestration on Azure (AKS + ACR)
+3. **Data Layer**: Central data store in Azure Blob, analytics in Azure Synapse
 
-## Data Pipeline:
-- **Data Ingestion**: Images are ingested from smelters into Azure Blob Storage.
-- **Data Processing**: Images are preprocessed and augmented using Azure Databricks.
-- **Model Training**: Training occurs on Azure ML with data from Azure Blob Storage.
-- **Inference**: Edge devices pull models from Azure Container Registry for real-time inference.
+![System Architecture](../diagrams/system_architecture.png)
 
-![Data Pipeline](diagrams/data_pipeline.png)
+## Data Pipeline
+1. **Data Ingestion**: Images come from smelter lines or QA stations.
+2. **Preprocessing**: Resize, augment, label in `data/labels/`.
+3. **Model Training**: Done on Azure ML or custom GPU setups.
+4. **Drift Detection**: `scripts/data_drift_detection.py` weekly checks.
+5. **Edge Deployment**: YOLO models pulled from container registry.
+
+![Data Pipeline](../diagrams/data_pipeline.png)
+
+## Observability & Monitoring
+- **Logging**: Centralized in Azure Monitor
+- **Metrics**: GPU usage, inference latency
+- **Alerting**: High error rates or unusual drift triggers ops notifications
