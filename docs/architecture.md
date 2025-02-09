@@ -45,7 +45,8 @@ AlumiGuard AI is split into three layers:
 - **Application Performance Monitoring (APM)**: Performance metrics are aggregated in dashboards (Azure Monitor, Dynatrace, etc.) to quickly identify bottlenecks or cost overruns.
 
 ## Architecture
-┌────────────────────────────┐
+```
+┌───────────────────────────┐
 │          OT Layer          │
 │ (Plant Floor / Smelters)   │
 └────────────────────────────┘
@@ -156,10 +157,10 @@ AlumiGuard AI is split into three layers:
 │    - Approvals of new expansions, multi-region deployment, or HPC scaling     │
 │    - Collaboration for Industry 4.0 expansions and advanced synergy           │
 └───────────────────────────────────────────────────────────────────────────────┘
-
+```
 
 ## Data pipeline
-
+```
 ┌─────────────────────────────────────────────┐
 │         Cameras @ Smelter Lines (OT)        │
 │   (Capturing aluminum surface images)       │
@@ -267,3 +268,4 @@ AlumiGuard AI is split into three layers:
 │ 3) Feedback piped back to "label corrections" queue in data lake               │
 │ 4) Next training cycle includes corrected annotations or ICS environment notes │
 └────────────────────────────────────────────────────────────────────────────────┘
+```
