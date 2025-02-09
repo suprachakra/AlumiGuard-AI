@@ -1,13 +1,20 @@
-# Dataset Overview
+## Dataset Documentation
 
-This dataset contains aluminum defect images annotated in COCO format.
+### Overview
+The dataset contains images of aluminum surfaces with labeled defects:
+- **Cracks**
+- **Pitting**
+- **Dents**
+- **Corrosion**
 
-## Defects Included:
-1. **Cracks**: Linear or branching fractures on the surface.
-2. **Pitting**: Small, localized corrosion pits.
-3. **Dents**: Deformations due to mechanical impact.
+### Structure
+- `data/raw/`: Raw images (640x640 or original resolution).
+- `data/labels/defect_labels.csv`: YOLO/COCO-like CSV with bounding boxes.
 
-## Data Quality Checks:
-- **Class Balance**: Ensured through synthetic data generation.
-- **Annotation Quality**: Validated using automated checks and manual review.
-- **Image Quality**: Images are normalized and augmented for consistency.
+### Quality Checks
+- We run `scripts/data_validation.py` to ensure correct format and no missing columns.
+- Periodic visual inspections and random sampling ensure annotation accuracy.
+
+### Future Work
+- Add new defect types (e.g., welding anomalies).
+- Expand dataset for other metals or conditions (temperature variations, humidity, etc.).
