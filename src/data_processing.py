@@ -3,12 +3,20 @@ import albumentations as A
 import numpy as np
 
 def process_image(image_path):
+    """
+    Reads and resizes an image to 640x640 resolution.
+    Raises an exception if the file is invalid or cannot be read.
+    """
     image = cv2.imread(image_path)
-    resized = cv2.resize(image, (640, 640))
-    return resized
+    if image is None:
+        raise ValueError(f"Could not read image from {image_path}")
+    return cv2.resize(image, (640, 640))
 
 def augment_image(image):
-    aug_pipeline = A.Compose([
+    """
+    Applies a series of augmentations to the image for diversity.
+    """
+    pipeline = A.Compose([
         A.RandomBrightnessContrast(p=0.5),
         A.HorizontalFlip(p=0.5),
         A.CLAHE(p=0.3),
@@ -17,8 +25,11 @@ def augment_image(image):
         A.Blur(blur_limit=3, p=0.3),
         A.RandomGamma(p=0.3)
     ])
-    return aug_pipeline(image=image)['image']
+    return pipeline(image=image)['image']
 
 def generate_synthetic_defects(image):
-    # Placeholder for synthetic defect generation
+    """
+    Placeholder for advanced synthetic defect generation, e.g., overlay crack textures.
+    """
+    # Sample approach: random overlay, morphological operations, etc.
     return image
