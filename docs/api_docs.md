@@ -20,3 +20,14 @@
       }
     ]
   }
+
+Rate Limiting: 100 requests per minute.
+
+#### Authentication
+- **JWT:** Must include in all /predict requests.
+
+#### Error Codes
+400: Missing or invalid image.
+401: Invalid credentials / token.
+429: Rate limit exceeded.
+500: Internal server error.
