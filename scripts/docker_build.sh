@@ -1,3 +1,4 @@
 #!/bin/bash
+# Docker Build Script
 
-docker build -t aluminum-defect-detection .
+docker build -t alumiguard-ai:latest .
