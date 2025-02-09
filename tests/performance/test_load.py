@@ -1,6 +1,9 @@
-from locust import HttpUser, task
+from locust import HttpUser, task, between
 
 class LoadTest(HttpUser):
-    @task(1)
-    def predict(self):
-        self.client.post("/predict", files={"image": open("data/raw/sample_01.jpg", "rb")})
+    wait_time = between(1, 2)
+
+    @task
+    def predict_task(self):
+        with open("data/raw/sample_01.jpg","rb") as img:
+            self.client.post("/predict", files={"image": img})
