@@ -1,32 +1,38 @@
-# SAFe Agile Roadmap
 
-## Iteration 1: Core Platform Setup (Q1 2025)
-- **Objective:** Deploy Kubernetes cluster on Azure Arc.
-- **Key Activities:**
-  - Set up CI/CD pipelines.
-  - Onboard cross-functional teams.
-- **Dependencies:** Azure DevOps setup.
-- **Success Metrics:** 
-  - 95% pipeline uptime.
-  - 80% automated test coverage.
+### **Roadmap**
 
-## Iteration 2: Edge Deployment (Q2 2025)
-- **Objective:** Deploy AI-powered defect detection to edge devices.
-- **Key Activities:**
-  - Optimize model for edge inference.
-  - Implement edge deployment pipeline.
-- **Dependencies:** Edge hardware availability.
-- **Success Metrics:**
-  - <5ms latency for edge inference.
-  - 90% defect detection accuracy on edge.
+```markdown
+### SAFe Agile Roadmap
 
-## Iteration 3: Global Rollout (Q3 2025)
-- **Objective:** Expand to 20 global plants.
-- **Key Activities:**
-  - Multi-cloud orchestration.
-  - Compliance with local regulations.
-- **Dependencies:** Cloud provider agreements.
-- **Success Metrics:**
-  - 50% energy optimization.
-  - $90M annual ROI.
+### Iteration 1 (Q1 2025): Core Platform & Pilot
+- **Objective**: Deploy AI model to pilot smelter line, gather feedback.
+- **Deliverables**:
+  - Basic real-time detection with YOLOv8
+  - API endpoint + JWT auth
+  - Data pipeline for stable training
+- **Metrics**:
+  - 80% model accuracy in pilot
+  - <100ms inference on edge
 
+### Iteration 2 (Q2 2025): Scale & Edge Optimization
+- **Objective**: Optimize for Jetson devices, expand to 2–3 lines.
+- **Deliverables**:
+  - TensorRT build
+  - Enhanced training with synthetic data
+- **Metrics**:
+  - 90% detection accuracy
+  - <5ms latency on Jetson
+
+### Iteration 3 (Q3 2025): Multi-Plant Rollout
+- **Objective**: Deploy to 20 global plants, unify dashboards.
+- **Deliverables**:
+  - Central monitoring
+  - Automated drift detection & retraining
+- **Metrics**:
+  - 95% overall accuracy
+  - 50% reduction in manual QA costs
+  - >$90M annual ROI
+
+### Adaptations & Feedback Loops
+- End-of-iteration demos, cross-functional reviews (Product, QA, Ops).
+- Data-driven pivot if new defect types or major compliance changes arise.
