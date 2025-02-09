@@ -17,3 +17,13 @@ def detect(image_path, token):
     headers = {"Authorization": f"Bearer {token}"}
     response = requests.post("http://localhost:5000/predict", files=files, headers=headers)
     return response.json()
+```
+
+## Error Handling
+Rate limit (429): Retry logic
+500: Fallback to manual inspection
+Invalid image: Alert user in ERP UI
+
+## Future Enhancements
+Webhooks for asynchronous notifications
+Bulk/batch endpoints for large volumes
