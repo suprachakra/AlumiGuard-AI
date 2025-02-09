@@ -18,3 +18,9 @@
 ## For Product Managers
 - Refer to `docs/roadmap.md` & `docs/marketing_plan.md` for vision & milestones
 - Collect feedback from pilot lines
+
+## Data & Architecture Stakeholders
+
+- **Data Translator**: Bridges business logic to technical teams, scoping out analytics use cases.
+- **Solution Architect**: Maintains the architecture blueprint, ensures compliance with IT/OT strategy, and monitors performance or cost.
+- **Agile Onboarding**: New data-focused roles learn about our sprint rituals, grooming sessions, and how to write or refine user stories specifically for data & AI tasks.
