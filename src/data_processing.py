@@ -1,35 +1,67 @@
-import cv2
-import albumentations as A
-import numpy as np
+"""
+data_processing.py
+------------------
+Module for processing raw data into a format suitable for training and inference.
+Includes functions for image pre-processing, augmentation, and label parsing.
+"""
 
-def process_image(image_path):
-    """
-    Reads and resizes an image to 640x640 resolution.
-    Raises an exception if the file is invalid or cannot be read.
-    """
+import os
+import cv2
+import numpy as np
+import pandas as pd
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
+
+def load_image(image_path):
+    """Load an image from disk."""
+    logger.debug(f"Loading image from: {image_path}")
     image = cv2.imread(image_path)
     if image is None:
-        raise ValueError(f"Could not read image from {image_path}")
-    return cv2.resize(image, (640, 640))
+        logger.error(f"Failed to load image at {image_path}")
+        raise FileNotFoundError(f"Image not found: {image_path}")
+    return image
+
+def preprocess_image(image, target_size=(640, 640)):
+    """
+    Preprocess the image:
+    - Resize to target size.
+    - Normalize pixel values.
+    """
+    logger.debug("Preprocessing image")
+    resized = cv2.resize(image, target_size)
+    normalized = resized / 255.0
+    return normalized
 
 def augment_image(image):
     """
-    Applies a series of augmentations to the image for diversity.
+    Apply data augmentation techniques:
+    - Horizontal flip
+    - Random brightness/contrast adjustments
     """
-    pipeline = A.Compose([
-        A.RandomBrightnessContrast(p=0.5),
-        A.HorizontalFlip(p=0.5),
-        A.CLAHE(p=0.3),
-        A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.1, rotate_limit=45, p=0.5),
-        A.GaussNoise(p=0.2),
-        A.Blur(blur_limit=3, p=0.3),
-        A.RandomGamma(p=0.3)
-    ])
-    return pipeline(image=image)['image']
+    logger.debug("Augmenting image")
+    # Horizontal flip
+    flipped = cv2.flip(image, 1)
+    # Adjust brightness/contrast
+    alpha = np.random.uniform(0.9, 1.1)  # contrast control
+    beta = np.random.uniform(-10, 10)    # brightness control
+    adjusted = cv2.convertScaleAbs(image, alpha=alpha, beta=beta)
+    return adjusted
 
-def generate_synthetic_defects(image):
-    """
-    Placeholder for advanced synthetic defect generation, e.g., overlay crack textures.
-    """
-    # Sample approach: random overlay, morphological operations, etc.
-    return image
+def load_labels(csv_path):
+    """Load defect labels from CSV."""
+    logger.debug(f"Loading labels from: {csv_path}")
+    try:
+        df = pd.read_csv(csv_path)
+        return df
+    except Exception as e:
+        logger.error(f"Error loading labels: {e}")
+        raise
+
+if __name__ == "__main__":
+    # Example usage
+    img = load_image("data/raw/sample_image.jpg")
+    proc_img = preprocess_image(img)
+    aug_img = augment_image(proc_img)
+    labels = load_labels("data/labels/defect_labels.csv")
+    logger.info("Data processing module executed successfully.")
