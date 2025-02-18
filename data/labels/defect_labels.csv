@@ -1,0 +1,5 @@
+label_id,defect_type,description
+1,crack,"Surface crack detected on aluminum sheet – immediate remediation required."
+2,dent,"Minor dent observed; may affect product aesthetics and integrity."
+3,scratch,"Visible scratches likely from handling, warranting quality review."
+4,discoloration,"Color variation indicative of heat treatment inconsistencies."
