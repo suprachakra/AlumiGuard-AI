@@ -1,17 +1,19 @@
-import requests
-import pytest
+"""
+test_chaos.py
+-------------
+Chaos tests to simulate unexpected system stress and component failures.
+"""
 
-def test_chaos_scenario():
-    """
-    Simulates partial network outage or high latency.
-    """
+import pytest
+from src.inference_api import run_inference
+import numpy as np
+
+def test_chaos_injection():
+    # Create a corrupted image (simulate noise)
+    corrupted_img = np.random.randint(0, 256, (640, 640, 3), dtype=np.uint8)
     try:
-        resp = requests.post(
-            "http://localhost:5000/predict",
-            files={"image": open("data/raw/sample_01.jpg", "rb")},
-            timeout=1  # intentionally short
-        )
-        assert resp.status_code == 200
-    except requests.exceptions.Timeout:
-        # The test can pass if we expect occasional timeouts in chaos scenarios
-        assert True
+        detections = run_inference(corrupted_img)
+        # Even if the image is noisy, the system should not crash
+        assert isinstance(detections, list)
+    except Exception as e:
+        pytest.fail(f"Inference failed under chaos conditions: {e}")
