@@ -1,5 +1,7 @@
 #!/bin/bash
-# Coverage Script
+# coverage.sh
+# Script to run tests and generate code coverage report
 
-coverage run --source=src -m pytest tests
+pytest --maxfail=1 --disable-warnings -q
+coverage run -m pytest
 coverage report -m
