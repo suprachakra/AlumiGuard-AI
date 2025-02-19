@@ -1,20 +1,10 @@
 #!/bin/bash
-# Azure Deployment Script (simplistic example)
+# deploy_azure.sh
+# Script to deploy the application to Azure AKS
 
-# Login to Azure
-az login
-
-# ACR Login
-ACR_NAME="<acr-name>"
-az acr login --name $ACR_NAME
-
-# Build & Push
-docker tag aerocheck-ai:latest $ACR_NAME.azurecr.io/aerocheck-ai:latest
-docker push $ACR_NAME.azurecr.io/alumiguard-ai:latest
-
-# AKS Deployment
-RESOURCE_GROUP="<resource-group>"
-AKS_NAME="<aks-cluster-name>"
-
-az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_NAME
-kubectl apply -f kubernetes/deployment.yaml
+RESOURCE_GROUP="rg-defect-detection"
+CLUSTER_NAME="defect-detection-cluster"
+echo "Deploying to Azure AKS cluster ${CLUSTER_NAME} in resource group ${RESOURCE_GROUP}..."
+az aks get-credentials --resource-group ${RESOURCE_GROUP} --name ${CLUSTER_NAME}
+kubectl apply -f scripts/terraform/main.tf
+echo "Deployment initiated."
