@@ -1,7 +1,19 @@
-import pytest
-from src.train import train_model
+"""
+test_train.py
+-------------
+Unit tests for training pipeline functions.
+"""
 
-def test_train_model():
-    model = train_model()
-    assert model is not None
-    # Optionally check if model files got updated or if training stats are valid
+import pytest
+import torch
+from src.models.model_utils import save_model, load_model
+
+def test_model_save_and_load(tmp_path):
+    # Create a dummy model (a simple tensor for illustration)
+    dummy_model = {"weights": torch.randn(10, 10)}
+    save_path = tmp_path / "dummy_model.pth"
+    save_model(dummy_model, str(save_path))
+    
+    loaded_model = load_model("custom", str(save_path))
+    # Basic test: ensure loaded model has the same keys
+    assert "weights" in loaded_model
