@@ -1,55 +1,48 @@
-from flask import Flask, request, jsonify
-from flask_limiter import Limiter
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token
-import logging
-import os
+"""
+inference_api.py
+----------------
+Provides a RESTful API for performing inference on new images.
+Uses FastAPI for handling requests and returns defect detections in JSON format.
+"""
 
-from src.models.model_utils import DefectModel
+from fastapi import FastAPI, File, UploadFile, HTTPException
+import uvicorn
+import cv2
+import numpy as np
+from io import BytesIO
+from src.models.model_utils import load_model, predict
+from src.utils.config_loader import load_config
+from src.utils.logger import get_logger
 
-app = Flask(__name__)
-app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'CHANGE_IN_PROD')
+logger = get_logger(__name__)
+app = FastAPI(title="Defect Detection Inference API", version="1.0")
 
-limiter = Limiter(app=app, key_func=lambda: request.remote_addr)
-jwt = JWTManager(app)
+# Load configuration and model at startup
+config = load_config("config/params.yaml")
+model = load_model(config["model"]["architecture"], config["model"]["save_path"])
 
-def setup_logger():
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-    return logging.getLogger(__name__)
-
-logger = setup_logger()
-model = DefectModel()
-
-@app.route('/login', methods=['POST'])
-def login():
-    """
-    Simple endpoint to obtain a JWT token.
-    In production, integrate with your auth system.
-    """
-    data = request.json
-    if data and data.get("username") == "test" and data.get("password") == "test123":
-        token = create_access_token(identity={"user":"test"})
-        return jsonify(access_token=token)
-    return jsonify(error="Invalid credentials"), 401
-
-@app.route('/predict', methods=['POST'])
-@limiter.limit("100/minute")
-@jwt_required()
-def predict():
-    """
-    Main defect detection endpoint.
-    Expects a multipart/form-data with 'image' field.
-    Returns detected defects (type, confidence, bbox).
-    """
+@app.post("/predict")
+async def predict_defects(file: UploadFile = File(...)):
     try:
-        if 'image' not in request.files:
-            return jsonify(error="No image provided"), 400
-        
-        image_bytes = request.files['image'].read()
-        results = model.predict(image_bytes)
-        return jsonify(results)
+        contents = await file.read()
+        nparr = np.frombuffer(contents, np.uint8)
+        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        if image is None:
+            raise ValueError("Invalid image file.")
     except Exception as e:
-        logger.error(f"API Error: {str(e)}")
-        return jsonify(error="Internal error"), 500
+        logger.error(f"Error processing image: {e}")
+        raise HTTPException(status_code=400, detail="Invalid image file.")
+    
+    # Run prediction
+    detections = predict(model, image)
+    return {"detections": detections}
+
+def run_inference(image):
+    """
+    Helper function to run inference on a given image.
+    Returns a list of detections.
+    """
+    return predict(model, image)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
