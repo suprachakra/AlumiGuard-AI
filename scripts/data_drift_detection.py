@@ -1,15 +1,24 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from evidently.dashboard import Dashboard
-from evidently.tabs import DataDriftTab
+#!/usr/bin/env python3
+"""
+drift_detection_cli.py
+----------------------
+CLI tool to run data drift detection between historical and live data.
+"""
 
-def detect_data_drift():
-    df = pd.read_csv('data/labels/defect_labels.csv')
-    train, test = train_test_split(df, test_size=0.2, random_state=42)
-    dashboard = Dashboard(tabs=[DataDriftTab()])
-    dashboard.calculate(train, test)
-    dashboard.save('data_drift_report.html')
-    print("Data drift report generated: data_drift_report.html")
+import argparse
+import numpy as np
+from src.utils.drift_detection import detect_drift
+
+def main():
+    parser = argparse.ArgumentParser(description="Run data drift detection.")
+    parser.add_argument("--train", required=True, help="Path to training data numpy file")
+    parser.add_argument("--live", required=True, help="Path to live data numpy file")
+    args = parser.parse_args()
+
+    train_data = np.load(args.train)
+    live_data = np.load(args.live)
+    drift = detect_drift(train_data, live_data)
+    print("Data Drift Detected:" if drift else "No Significant Drift Detected.")
 
 if __name__ == "__main__":
-    detect_data_drift()
+    main()
