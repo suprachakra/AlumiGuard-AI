@@ -1,4 +1,7 @@
 #!/bin/bash
-# Docker Build Script
+# docker_build.sh
+# Script to build the Docker image for the defect detection application
 
-docker build -t alumiguard-ai:latest .
+IMAGE_NAME="defect-detection:latest"
+docker build -t ${IMAGE_NAME} .
+echo "Docker image ${IMAGE_NAME} built successfully."
