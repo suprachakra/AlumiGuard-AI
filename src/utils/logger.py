@@ -1,8 +1,23 @@
-import logging
+"""
+logger.py
+---------
+Configures and returns a standardized logger for the application.
+"""
 
-def setup_logger():
-    """
-    Set up a simple logger for the system.
-    """
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-    return logging.getLogger(__name__)
+import logging
+import sys
+
+def get_logger(name):
+    logger = logging.getLogger(name)
+    if not logger.handlers:
+        # Configure handler if not already configured
+        handler = logging.StreamHandler(sys.stdout)
+        formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(name)s: %(message)s')
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+        logger.setLevel(logging.DEBUG)
+    return logger
+
+if __name__ == "__main__":
+    log = get_logger("TestLogger")
+    log.info("Logger is configured properly.")
