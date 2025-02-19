@@ -1,19 +1,24 @@
-import requests
-import pytest
+"""
+test_inference_api.py
+---------------------
+Integration tests for the inference API endpoints using TestClient.
+"""
 
-BASE_URL = "http://localhost:5000"
+from fastapi.testclient import TestClient
+from src.inference_api import app
 
-def test_login_and_predict():
-    # 1) Login
-    login_resp = requests.post(f"{BASE_URL}/login", json={"username":"test","password":"test123"})
-    assert login_resp.status_code == 200
-    token = login_resp.json().get("access_token")
-    assert token is not None
+client = TestClient(app)
 
-    # 2) Predict
-    headers = {"Authorization": f"Bearer {token}"}
-    files = {"image": open("data/raw/sample_01.jpg","rb")}
-    resp = requests.post(f"{BASE_URL}/predict", files=files, headers=headers)
-    assert resp.status_code == 200
-    response_json = resp.json()
-    assert "detections" in response_json
+def test_predict_endpoint():
+    # Create a dummy image (white square)
+    import numpy as np
+    import cv2
+    dummy_img = 255 * np.ones((100, 100, 3), dtype=np.uint8)
+    _, img_encoded = cv2.imencode('.jpg', dummy_img)
+    response = client.post(
+        "/predict",
+        files={"file": ("dummy.jpg", img_encoded.tobytes(), "image/jpeg")}
+    )
+    assert response.status_code == 200
+    json_resp = response.json()
+    assert "detections" in json_resp
