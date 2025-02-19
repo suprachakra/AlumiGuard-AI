@@ -1,10 +1,7 @@
 #!/bin/bash
-# Convert YOLO model to TensorRT for Jetson
+# jetson_tensorrt_build.sh
+# Script to build a TensorRT-optimized Docker image for NVIDIA Jetson devices
 
-MODEL_PATH=${1:-models/custom_model.pth}
-TRT_OUTPUT="models/custom_model_trt.engine"
-
-echo "Converting $MODEL_PATH to TensorRT engine..."
-# Example or placeholder; actual commands differ based on environment
-# trtexec --onnx=$MODEL_PATH --saveEngine=$TRT_OUTPUT
-echo "TensorRT engine saved as $TRT_OUTPUT"
+DOCKER_IMAGE="jetson-tensorrt:latest"
+docker build -f Dockerfile.jetson -t ${DOCKER_IMAGE} .
+echo "TensorRT Docker image built: ${DOCKER_IMAGE}"
