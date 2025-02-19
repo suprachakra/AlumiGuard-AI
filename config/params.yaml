@@ -1,4 +1,25 @@
-batch_size: 16
-learning_rate: 0.001
-epochs: 50
-image_size: [640, 640]
+# Global configuration parameters
+
+model:
+  architecture: "yolov8"
+  pretrained_weights: "models/yolov8n.pt"
+  save_path: "models/custom_model.pth"
+
+data:
+  raw_dir: "data/raw"
+  labels_csv: "data/labels/defect_labels.csv"
+
+training:
+  epochs: 50
+  batch_size: 16
+  learning_rate: 0.001
+
+inference:
+  confidence_threshold: 0.85
+
+deployment:
+  azure_region: "eastus"
+  aks_cluster: "defect-detection-cluster"
+
+logging:
+  level: "DEBUG"
