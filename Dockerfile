@@ -1,13 +1,22 @@
-FROM python:3.10-slim
+# Dockerfile
+FROM python:3.8-slim
 
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Set work directory
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies
+COPY requirements.txt /app/
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-COPY . .
+# Copy project
+COPY . /app/
 
-# Expose the Flask API port
-EXPOSE 5000
+# Expose port for the inference API
+EXPOSE 8000
 
-CMD ["python", "src/inference_api.py"]
+# Command to run the API server
+CMD ["uvicorn", "src.inference_api:app", "--host", "0.0.0.0", "--port", "8000"]
