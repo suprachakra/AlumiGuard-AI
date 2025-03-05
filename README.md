@@ -30,10 +30,6 @@ This project uses YOLOv8 to detect surface defects and forging a new era of auto
 > Refer [Roadmap](https://github.com/suprachakra/AlumiGuard-AI/blob/main/docs/roadmap.md#phase-1-foundation--pilot-months-03)
 
 ```mermaid
----
-config:
-  layout: elk
----
 flowchart TB
  subgraph ICS_Env["**ICS & Edge Layer**"]
     direction TB
