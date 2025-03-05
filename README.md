@@ -40,47 +40,123 @@ flowchart TD
         L["QA & Negative Testing"]
         N["Brand Identity,<br>Marketing &amp; Comms"]
   end
-    A["ICS & HPC Edge"] --> B["ICS DMZ<br>Firewall/WAF"]
-    B --> C["Azure AKS<br>(Microservices)"]
-    C --> D["Tekton/Jenkins<br>CI/CD Pipeline"] & E["Observability<br>(Prometheus/Azure Monitor)"] & F["Data Validation & YOLO Fallback API"] & L
-    D --> G["Model Registry<br>(ACR/MLflow)"]
-    G --> A
-    E --> H["Logs &amp; Metrics<br>Loki/LogAnalytics"]
-    F --> I["Synapse/Databricks<br>for advanced analytics"]
-    I --> J["Purview<br>Data Governance"]
-    J --> K["ISO/GDPR<br>Retention Tools"]
+ subgraph ARCH["ARCHITECTURE FLOW"]
+    direction TB
+        s1
+        B["ICS DMZ<br>Firewall/WAF"]
+        A["ICS & HPC Edge"]
+        C["Azure AKS<br>(Microservices)"]
+        D["Tekton/Jenkins<br>CI/CD Pipeline"]
+        E["Observability<br>(Prometheus/Azure Monitor)"]
+        F["Data Validation & YOLO Fallback API"]
+        G["Model Registry<br>(ACR/MLflow)"]
+        H["Logs &amp; Metrics<br>Loki/LogAnalytics"]
+        I["Synapse/Databricks<br>for advanced analytics"]
+        J["Purview<br>Data Governance"]
+        K["ISO/GDPR<br>Retention Tools"]
+  end
+ subgraph Phase1["PHASE 1: Foundation & Pilot (Months 0–3)"]
+        M01_1["Month 0–1: HPC &amp; ICS Security Pilot<br>(PI 1, Sprint 1 &amp; 2)"]
+        M12_1["Month 1–2: Azure &amp; Microservices Foundation<br>(PI 1, Sprint 3 &amp; 4)"]
+        M23_1["Month 2–3: MLOps &amp; Data Governance Kickstart<br>(PI 1, Sprint 5 &amp; 6)"]
+  end
+ subgraph Phase2["PHASE 2: Expansion & Feedback (Months 3–6)"]
+        M34_2["Month 3–4: Operator UI &amp; QA Feedback<br>(PI 2, Sprint 1 &amp; 2)"]
+        M45_2["Month 4–5: Scalability &amp; Multi-Plant Onboarding<br>(PI 2, Sprint 3 &amp; 4)"]
+        M56_2["Month 5–6: Data Governance Maturity &amp; QA Automation<br>(PI 2, Sprint 5 &amp; 6)"]
+  end
+ subgraph Phase3["PHASE 3: Advanced Analytics & Model Optimization (Months 6–9)"]
+        M67_3["Month 6–7: Predictive Maintenance &amp; Synapse Analytics<br>(PI 3, Sprint 1 &amp; 2)"]
+        M78_3["Month 7–8: Model Optimization &amp; HPC Tuning<br>(PI 3, Sprint 3 &amp; 4)"]
+        M89_3["Month 8–9: Self-Service Analytics &amp; Operator Training<br>(PI 3, Sprint 5 &amp; 6)"]
+  end
+ subgraph Phase4["PHASE 4: Enterprise Rollout &amp; Advanced Governance (Months 9–12)"]
+        M910_4["Month 9–10: Multi-Region &amp; HA<br>(PI 4, Sprint 1 &amp; 2)"]
+        M1011_4["Month 10–11: Complete Governance &amp; Compliance<br>(PI 4, Sprint 3 &amp; 4)"]
+        M1112_4["Month 11–12: Enterprise Rollout &amp; Marketing<br>(PI 4, Sprint 5 &amp; 6)"]
+  end
+ subgraph ROADMAP["PROJECT ROADMAP (SAFe)"]
+    direction TB
+        Phase1
+        Phase2
+        Phase3
+        Phase4
+  end
     L --> M
     M --> N
+    A --> B
+    B --> C
+    C --> D & E & F & L
+    D --> G
+    G --> A
+    E --> H
+    F --> I
+    I --> J
+    J --> K
     N --> J
+    ARCH --> ROADMAP
 
      M:::VanGoghYellow
      L:::VanGoghYellow
      N:::VanGoghYellow
+     B:::Aqua
      A:::Pine
-     A:::Aqua
-     A:::PicassoBlue
-     B:::Sky
-     C:::Rose
+     C:::PicassoBlue
      D:::Peach
      E:::DegasGreen
+     F:::Rose
      G:::MatisseLavender
-    classDef RenoirPink stroke-width:1px, stroke-dasharray:none, stroke:#E4A0A0, fill:#FBE5E5, color:#7D3E3E  
-    classDef MonetBlue stroke-width:1px, stroke-dasharray:none, stroke:#87AFC7, fill:#D4EAF7, color:#30577B
+     H:::TurnerMist
+     I:::MonetBlue
+     J:::KlimtGold
+     J:::MatisseLavender
+     J:::Sky
+     K:::RenoirPink
+     M01_1:::Sky
+     M01_1:::VanGoghYellow
+     M12_1:::Sky
+     M12_1:::VanGoghYellow
+     M23_1:::Sky
+     M23_1:::VanGoghYellow
+     M34_2:::Sky
+     M34_2:::MonetBlue
+     M45_2:::Sky
+     M45_2:::MonetBlue
+     M56_2:::Sky
+     M56_2:::MonetBlue
+     M67_3:::Sky
+     M67_3:::DegasGreen
+     M78_3:::Sky
+     M78_3:::DegasGreen
+     M89_3:::Sky
+     M89_3:::DegasGreen
+     M910_4:::Sky
+     M910_4:::Rose
+     M1011_4:::Sky
+     M1011_4:::Rose
+     M1112_4:::Sky
+     M1112_4:::Rose
+    classDef RenoirPink stroke-width:1px, stroke-dasharray:none, stroke:#E4A0A0, fill:#FBE5E5, color:#7D3E3E
     classDef KlimtGold stroke-width:1px, stroke-dasharray:none, stroke:#D4A017, fill:#FBF2C1, color:#705A16
     classDef Ash stroke-width:1px, stroke-dasharray:none, stroke:#999999, fill:#EEEEEE, color:#000000
     classDef TurnerMist stroke-width:1px, stroke-dasharray:none, stroke:#B8C4D1, fill:#EAF2F8, color:#4A5B6F
     classDef HokusaiWave stroke-width:1px, stroke-dasharray:none, stroke:#6188A9, fill:#D4E8F2, color:#2A425D
     classDef CezannePeach stroke-width:1px, stroke-dasharray:none, stroke:#E2A07D, fill:#FBE7DA, color:#6D4532
-    classDef VanGoghYellow stroke-width:1px, stroke-dasharray:none, stroke:#E3B448, fill:#FDF6C9, color:#7D5A17
     classDef Pine stroke-width:1px, stroke-dasharray:none, stroke:#254336, fill:#27654A, color:#FFFFFF
     classDef Aqua stroke-width:1px, stroke-dasharray:none, stroke:#46EDC8, fill:#DEFFF8, color:#378E7A
     classDef PicassoBlue stroke-width:1px, stroke-dasharray:none, stroke:#5A84A2, fill:#CDE0F2, color:#2D4661
+    classDef Peach stroke-width:1px, stroke-dasharray:none, stroke:#FBB35A, fill:#FFEFDB, color:#8F632D
+    classDef MatisseLavender stroke-width:1px, stroke-dasharray:none, stroke:#B39DBC, fill:#ECE3F5, color:#4E3A5E
     classDef Sky stroke-width:1px, stroke-dasharray:none, stroke:#374D7C, fill:#E2EBFF, color:#374D7C
     classDef Rose stroke-width:1px, stroke-dasharray:none, stroke:#FF5978, fill:#FFDFE5, color:#8E2236
     classDef DegasGreen stroke-width:1px, stroke-dasharray:none, stroke:#A7C796, fill:#E6F4E2, color:#3E6A42
-    classDef Peach stroke-width:1px, stroke-dasharray:none, stroke:#FBB35A, fill:#FFEFDB, color:#8F632D
-    classDef MatisseLavender stroke-width:1px, stroke-dasharray:none, stroke:#B39DBC, fill:#ECE3F5, color:#4E3A5E
-    style s1 fill:transparent
+    classDef MonetBlue stroke-width:1px, stroke-dasharray:none, stroke:#87AFC7, fill:#D4EAF7, color:#30577B
+    classDef VanGoghYellow stroke-width:1px, stroke-dasharray:none, stroke:#E3B448, fill:#FDF6C9, color:#7D5A17
+    style Phase1 fill:transparent
+    style Phase2 fill:transparent
+    style Phase3 fill:transparent
+    style Phase4 fill:transparent
+    style ROADMAP fill:transparent
 ```
 
 
@@ -93,11 +169,64 @@ flowchart TD
 6. **Compliance with ISO 27001 and GDPR**.
 7. **Runtime encryption** for model weights.
 
-## Quick Start:
-1. Clone this repository.
-2. Install dependencies: `pip install -r requirements.txt`.
-3. Run the API: `python src/inference_api.py`.
-4. Test the API using Postman or cURL.
+## Quick Start
+
+1. **Clone Repository**  
+   ```bash
+   git clone https://github.com/<your-org>/AluminumDefectDetection.git
+   cd AluminumDefectDetection
+   ```
+
+2. **Install Dependencies**  
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Validate Dataset**  
+   ```bash
+   python scripts/data_validation.py
+   ```
+
+4. **Run API Locally**  
+   ```bash
+   python src/inference_api.py
+   ```
+
+5. **Check MLOps Pipeline**  
+   - Example Tekton pipeline definitions in `scripts/terraform/` or `infrastructure/`.
+   - For local testing, see `notebooks/defect_detection.ipynb`.
+---
+
+### Project Structure
+
+```plaintext
+AluminumDefectDetection/
+├── data/...
+├── models/...
+├── notebooks/
+│   ├── defect_detection.ipynb
+│   └── predictive_maintenance.ipynb
+├── src/
+│   ├── correlation_ics.py
+│   ├── data_processing.py
+│   ├── train.py
+│   ├── inference_api.py
+│   ├── synthetic_generation.py
+│   └── ...
+├── tests/...
+├── docs/
+│   ├── architecture.md
+│   ├── roadmap.md
+│   ├── brand_identity.md
+│   ├── user_training.md
+│   └── ...
+├── compliance/...
+├── scripts/...
+├── infrastructure/...
+├── requirements.txt
+├── README.md
+└── ...
+```
 
 ## SAFe Agile Metrics:
 - **2-Week Sprint Cycles**
