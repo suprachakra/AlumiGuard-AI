@@ -30,19 +30,23 @@ This project uses YOLOv8 to detect surface defects and forging a new era of auto
 > Refer [Roadmap](https://github.com/suprachakra/AlumiGuard-AI/blob/main/docs/roadmap.md#phase-1-foundation--pilot-months-03)
 
 ```mermaid
+---
+config:
+  layout: elk
+---
 flowchart TB
  subgraph ICS_Env["**ICS & Edge Layer**"]
     direction TB
         A1["ICS Security Tools<br>Nozomi\/Vectra"]
         A2["PLCs, SCADA,<br>Thermal Cameras"]
         A3["NVIDIA Jetson HPC<br>(Local YOLO)"]
-        A4["Offline Buffer<br>& Fallback"]
+        A4["Offline Buffer<br>&amp; Fallback"]
         A5["ICS DMZ<br>(Firewall\/WAF)"]
   end
  subgraph Azure_Cloud["**Azure Cloud Services & MLOps**"]
     direction TB
         B1["AKS<br>(Kubernetes + CNCF)"]
-        B2["Data Preprocessing<br>& Validation"]
+        B2["Data Preprocessing<br>&amp; Validation"]
         B3["MLOps Pipeline<br>(Tekton\/Jenkins)"]
         B4["Model Registry<br>(ACR\/MLflow)"]
         B5["Azure Machine Learning<br>(Training,<br>Hyperparam Tuning)"]
@@ -56,13 +60,13 @@ flowchart TB
         C2["Azure Synapse\/Databricks<br>(Advanced Analytics)"]
         C3["Purview\/Collibra<br>(Lineage,<br>Catalog)"]
         C4["Key Vault<br>(Secrets,<br>Encryption)"]
-        C5["ISO 27001\/GDPR Tools<br>Retention & Audits"]
+        C5["ISO 27001\/GDPR Tools<br>Retention &amp; Audits"]
   end
  subgraph QA_Brand_Marketing["**QA, Brand & Marketing**"]
-        D1["QA & Negative Testing<br>Corrupted images,<br>Chaos scripts"]
+        D1["QA &amp; Negative Testing<br>Corrupted images,<br>Chaos scripts"]
         D2["Operator UI\/UX<br>Feedback Loop"]
         D3["Brand Identity<br>(Name, Logo,<br>Messaging)"]
-        D4["Marketing & Comms<br>(Whitepapers,<br>ROI Demos)"]
+        D4["Marketing &amp; Comms<br>(Whitepapers,<br>ROI Demos)"]
   end
  subgraph Stakeholders["**Key Stakeholders & Cross-Functional Teams**"]
         E1["SVP Product Mgmt"]
@@ -105,15 +109,17 @@ flowchart TB
     E2 -- Engineering Oversight --> B1
     E3 -- Data Governance,<br>Analytics Strategy --> C3
     E4 -- Test Coverage,<br>UAT Approval --> D1
-    E5 -- Brand Comms,<br>Fairs & Summits --> D4
+    E5 -- Brand Comms,<br>Fairs &amp; Summits --> D4
     E6 -- UX Prototypes,<br>Operator Dash --> D2
     E7 -- Finance,<br>Legal,<br>Procurement --> C5
-
      A1:::ICS
      A2:::ICS
      A3:::HPC
+     A3:::Peach
      A4:::HPC
+     A4:::Peach
      A5:::DMZ
+     A5:::Peach
      B1:::Azure
      B2:::Azure
      B3:::MLOps
@@ -123,21 +129,33 @@ flowchart TB
      B7:::Azure
      B8:::Azure
      C1:::Azure
+     C1:::MonetBlue
      C2:::Azure
+     C2:::MonetBlue
      C3:::Gov
      C4:::Azure
+     C4:::MonetBlue
      C5:::Gov
      D1:::QA
+     D1:::VanGoghYellow
      D2:::QA
+     D2:::VanGoghYellow
      D3:::Brand
      D4:::Brand
      E1:::Stakeholder
+     E1:::Aqua
      E2:::Stakeholder
+     E2:::Aqua
      E3:::Stakeholder
+     E3:::Aqua
      E4:::Stakeholder
+     E4:::Aqua
      E5:::Stakeholder
+     E5:::Aqua
      E6:::Stakeholder
+     E6:::Aqua
      E7:::Stakeholder
+     E7:::Aqua
     classDef ICS fill:#fee7e7,stroke:#eb9d9d,color:#701414
     classDef HPC fill:#f7f1e7,stroke:#d8b862,color:#5a4d1f
     classDef DMZ fill:#fff8e7,stroke:#e8c96f,color:#5f4509
@@ -147,6 +165,22 @@ flowchart TB
     classDef Brand fill:#fce7fa,stroke:#d79fd4,color:#531f45
     classDef QA fill:#fefbd0,stroke:#dad169,color:#5a5c09
     classDef Stakeholder fill:#f3ffe7,stroke:#bdde89,color:#3a4c1f
+    classDef RenoirPink stroke-width:1px, stroke-dasharray:none, stroke:#E4A0A0, fill:#FBE5E5, color:#7D3E3E  
+    classDef PicassoBlue stroke-width:1px, stroke-dasharray:none, stroke:#5A84A2, fill:#CDE0F2, color:#2D4661  
+    classDef KlimtGold stroke-width:1px, stroke-dasharray:none, stroke:#D4A017, fill:#FBF2C1, color:#705A16
+    classDef DegasGreen stroke-width:1px, stroke-dasharray:none, stroke:#A7C796, fill:#E6F4E2, color:#3E6A42
+    classDef Rose stroke-width:1px, stroke-dasharray:none, stroke:#FF5978, fill:#FFDFE5, color:#8E2236
+    classDef Ash stroke-width:1px, stroke-dasharray:none, stroke:#999999, fill:#EEEEEE, color:#000000
+    classDef TurnerMist stroke-width:1px, stroke-dasharray:none, stroke:#B8C4D1, fill:#EAF2F8, color:#4A5B6F
+    classDef MatisseLavender stroke-width:1px, stroke-dasharray:none, stroke:#B39DBC, fill:#ECE3F5, color:#4E3A5E
+    classDef Pine stroke-width:1px, stroke-dasharray:none, stroke:#254336, fill:#27654A, color:#FFFFFF
+    classDef HokusaiWave stroke-width:1px, stroke-dasharray:none, stroke:#6188A9, fill:#D4E8F2, color:#2A425D
+    classDef Sky stroke-width:1px, stroke-dasharray:none, stroke:#374D7C, fill:#E2EBFF, color:#374D7C
+    classDef CezannePeach stroke-width:1px, stroke-dasharray:none, stroke:#E2A07D, fill:#FBE7DA, color:#6D4532
+    classDef MonetBlue stroke-width:1px, stroke-dasharray:none, stroke:#87AFC7, fill:#D4EAF7, color:#30577B
+    classDef VanGoghYellow stroke-width:1px, stroke-dasharray:none, stroke:#E3B448, fill:#FDF6C9, color:#7D5A17
+    classDef Peach stroke-width:1px, stroke-dasharray:none, stroke:#FBB35A, fill:#FFEFDB, color:#8F632D
+    classDef Aqua stroke-width:1px, stroke-dasharray:none, stroke:#46EDC8, fill:#DEFFF8, color:#378E7A
     style ICS_Env fill:transparent,stroke:#FF6D00
     style Azure_Cloud fill:transparent,stroke:#AA00FF
     style QA_Brand_Marketing fill:transparent,stroke:#00C853
