@@ -1,7 +1,7 @@
 ## AlumiGuard-AI 
 `Industrial Aluminum Defect Detection`
 
-**AeroCheck AI** is an end-to-end, **Industry 4.0** solution for real-time defect detection in aluminum manufacturing. It combines **ICS security** (Nozomi/Vectra), **NVIDIA Jetson HPC** for local YOLO inference, and **Azure-based** microservices and MLOps to deliver high accuracy and **robust** multi-plant scalability.
+**ALumiGuard AI** is an end-to-end, **Industry 4.0** solution for real-time defect detection in aluminum manufacturing. It combines **ICS security** (Nozomi/Vectra), **NVIDIA Jetson HPC** for local YOLO inference, and **Azure-based** microservices and MLOps to deliver high accuracy and **robust** multi-plant scalability.
 
 ### Key Highlights
 
