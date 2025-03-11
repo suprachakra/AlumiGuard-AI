@@ -40,7 +40,7 @@ flowchart TD
         L["QA & Negative Testing"]
         N["Brand Identity,<br>Marketing &amp; Comms"]
   end
- subgraph ARCH["ARCHITECTURE FLOW"]
+ subgraph ARCH["**ARCHITECTURE FLOW**"]
     direction TB
         s1
         B["ICS DMZ<br>Firewall/WAF"]
@@ -75,7 +75,7 @@ flowchart TD
         M1011_4["Month 10–11: Complete Governance &amp; Compliance<br>(PI 4, Sprint 3 &amp; 4)"]
         M1112_4["Month 11–12: Enterprise Rollout &amp; Marketing<br>(PI 4, Sprint 5 &amp; 6)"]
   end
- subgraph ROADMAP["PROJECT ROADMAP (SAFe)"]
+ subgraph ROADMAP["**PROJECT ROADMAP (SAFe)**"]
     direction TB
         Phase1
         Phase2
@@ -157,6 +157,7 @@ flowchart TD
     style Phase3 fill:transparent
     style Phase4 fill:transparent
     style ROADMAP fill:transparent
+    style ARCH fill:transparent
 ```
 
 
